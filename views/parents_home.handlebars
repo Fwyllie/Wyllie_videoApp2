@@ -1,0 +1,46 @@
+<section id="app">
+    <!-- <div class="movie-wrapper">
+      <aside>
+        <h4 class="movie-title">{{ defaultMovie.movies_title }}</h4>
+        <span class="movie-year">
+          {{defaultMovie.movies_year}} &nbsp;&bull;&nbsp; {{defaultMovie.movies_runtime}}
+        </span>
+        <i class="movie-genre">{{defaultMovie.genre_name}}</i>
+      </aside>
+      <video autoplay controls>
+        <source src="video/{{ defaultMovie.movies_trailer }}">
+      </video>
+    </div> -->
+
+    <div class="moviesDiv">
+      <h6 class="genre-name">Movies</h6>
+      <div class="movie-list" v-for="movie in movies">
+        <a :href="'/watch/' + movie.id">
+          <img class="movie-thumb" :src="'/images/' + movie.cover" :alt="movie.name">
+        </a>
+      </div>
+    </div>
+
+    <!-- <div class="musicDiv">
+      <h2>Music</h2>
+      <div class="musicThumb" v-for="song in music">
+        <img class="musicCover" :src="'images/' + song.music_thumbnail" alt="song.music_name">
+        <audio controls class="audio" :src="'audio/' + song.music_link"></audio>
+        <h3>${song.music_name}</h3>
+        <p>${song.music_artist}</p>
+      </div>
+    </div> -->
+<!--
+    <div id="tvDiv">
+    <h2>Shows</h2>
+    <div v-for="show in shows">
+      <a class="movieLink" href="/watchTv/{{tv_id}}" id="{{tv_id}}">
+        <div class="movieThumb">
+          <img src="/images/{{tv_thumbnail}}" alt="{{tv_name}}">
+          <h3>{{tv_name}}</h3>
+          <p>{{tv_artist}}</p>
+        </div>
+      </a>
+    </div> -->
+  <!-- </div> -->
+</section>

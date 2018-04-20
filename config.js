@@ -3,9 +3,7 @@ var config = {
   password : "root",
   port: 8889,
   host: "localhost",
-  database: "db_movies_new",
+  database: "wyllie_f_videoApp",
 }
-
-
 
 module.exports = config;

@@ -6,13 +6,42 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
 	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.15/dist/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
+	<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=28264632142&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+	<!-- <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : 'your-app-id',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v2.12'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script> -->
+
 	<header>
-		<img src="/images/roku.svg" alt="Roku logo" width="90"><span>FlashBack</span>
+		<span>Franflix!</span>
 		<nav>
 			<ul>
-				<li>Kids</li>
 				<li><i class="fas fa-user-circle"></i></li>
 				<li><i class="fas fa-cog"></i></li>
 			</ul>
@@ -22,14 +51,16 @@
 	<main>
 		{{{ body }}}
 	</main>
+	<!-- <script>
+		{{{ data }}}
+	</script> -->
 
 	<footer>
-		<span>There should be some relevant info here... still in development</span>
 		<p class="copy">
-			&copy; 2018 The Awesome Company, Inc
+			&copy; 2018 The Franflix Company, Inc
 		</p>
 
-		<ul>
+		<!-- <ul>
 			<li>
 				<i class="fab fa-facebook"></i>
 			</li>
@@ -42,7 +73,20 @@
 			<li>
 				<i class="fab fa-instagram"></i>
 			</li>
-		</ul>
+		</ul> -->
+
+		<div class="fb-share-button" data-href="'http://localhost:3000/movies/{{movie}}/{{moviesrc}}'" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2Fmovies%2F5%2FBeauty.mp4&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+
+		<a class="twitter-share-button"
+		  href="https://twitter.com/share"
+		  data-url="https://dev.twitter.com/web/tweet-button"
+		  data-size="l"
+		  data-text="Checkout this movie!">
+		 <i class="fab fa-twitter"></i>Tweet
+		</a>
+
+		<div class="g-plus" data-action="share" data-href="http://localhost:3000/movies/{{movie}}/{{moviesrc}}"></div>
+
 	</footer>
 
 <script>
@@ -50,11 +94,8 @@
 		movies : {{{ data }}}
 	}
 </script>
-{{#if mainpage}}
-	<script src="/javascripts/main.js"></script>
-{{/if}}
-{{#if videopage}}
-	<script src="/javascripts/videoVM.js"></script>
-{{/if}}
+{{#each js}}
+<script src="/javascripts/{{this}}"></script>
+{{/each}}
 </body>
 </html>
