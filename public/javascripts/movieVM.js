@@ -21,15 +21,15 @@ Vue.component('review-stars', {
 })
 
 var myVideoApp = {
-  // movieReviews(reviews){
-  //   reviews.forEach(review => {myVideoApp.vm.reviews.push({
-  //       name : review.comments_auth,
-  //       rating : review.comments_rating,
-  //       date : review.comments_date,
-  //       content : review.comments_copy
-  //     });
-  //   });
-  // },
+  movieReviews(movies){
+    movies.forEach(review => {myVideoApp.vm.reviews.push({
+        name : review.comments_auth,
+        rating : review.comments_rating,
+        date : review.comments_date,
+        content : review.comments_copy
+      });
+    });
+  },
 
   vm : new Vue ({
     delimiters : ["${", "}"],
@@ -74,4 +74,4 @@ var myVideoApp = {
       }
     })
 };
-myVideoApp.movieReviews(appData.reviews);
+myVideoApp.movieReviews(appData.movies);

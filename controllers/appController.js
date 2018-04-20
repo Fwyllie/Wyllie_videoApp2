@@ -56,7 +56,7 @@ exports.getAllKids = (req, res) => {
     if(err){
       return console.log(err.message);
     }
-    let query = 'SELECT movie_id, movie_title, movie_rating, movie_thumbnail FROM tbl_movies WHERE movie_kids="yes"';
+    let query = 'SELECT movies_id, movies_title, movies_cover, movies_trailer FROM tbl_movies WHERE movies_kids="yes"';
     let musQuery = 'SELECT music_id, music_name, music_artist, music_thumbnail, music_link FROM tbl_music WHERE music_kids="yes"';
     let tvQuery = 'SELECT tv_id, tv_name, tv_rating, tv_thumbnail FROM tbl_tv WHERE tv_kids="yes"';
     connect.query(query, (err, movResult) => {
@@ -68,11 +68,11 @@ exports.getAllKids = (req, res) => {
           }
           res.render('kids_home', {
             title: 'Fran\'s Greatest Hits',
-            movieData : movResult,
-            musicData : musResult,
-            tvData : tvResult,
+            movieData : JSON.stringify(movResult),
+            musicData : JSON.stringify(musResult),
+            tvData : JSON.stringify(tvResult),
             css : 'kids.css',
-            js : ['filter.js','main.js', 'genreFilter.js']
+            js : ['main.js']
           });
         });
       });
@@ -99,7 +99,7 @@ exports.getOne = (req, res) => {
         res.render('watch', {
           movieId : req.params.id,
           singleData : movResult[0],
-          reviewData : JSON.stringify(revResult),
+          movieData : JSON.stringify(revResult),
           js : ['movieVM.js']
         });
       });
