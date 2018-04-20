@@ -22,7 +22,7 @@
     <div class="tvDiv">
     <h2>Shows</h2>
     <div v-for="show in tv">
-      <a class="movieLink" :href="'/watchTv/' + show.id" :id="show.id">
+      <a class="movieLink" :href="'/watchTV/' + show.id" :id="show.id">
         <div class="movieThumb">
           <img :src="'/images/' + show.cover" :alt="show.title">
           <h3>${show.title}</h3>

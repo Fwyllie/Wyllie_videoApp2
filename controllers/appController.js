@@ -107,6 +107,32 @@ exports.getOne = (req, res) => {
 });
 };
 
+exports.getOneTV = (req, res) => {
+  console.log("hit get one TV");
+  connect.getConnection((err, connection) => {
+    if(err){
+      return console.log(err.message);
+    }
+  let revquery = `SELECT * FROM tbl_comments WHERE comments_tv = "${req.params.id}"`;
+  let movquery = `SELECT tv_id, tv_thumbnail, tv_name, tv_desc, tv_rating, tv_video, tv_episode FROM tbl_tv WHERE tv_id = "${req.params.id}"`
+    connect.query(revquery, (error, revResult) => {
+      connect.query(movquery, (error, movResult) => {
+        connection.release();
+        if (error){
+          console.log(error);
+        }
+        console.log(revResult);
+        res.render('watchTV', {
+          movieId : req.params.id,
+          singleData : movResult[0],
+          movieData : JSON.stringify(revResult),
+          js : ['movieVM.js']
+        });
+      });
+    });
+});
+};
+
 exports.post_new_review = (req, res) => {
   console.log("hit all movies");
   connect.getConnection((err, connection) => {

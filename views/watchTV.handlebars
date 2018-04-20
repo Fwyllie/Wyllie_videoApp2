@@ -1,0 +1,35 @@
+<section id="video">
+  <a href="/" class="back-button">
+    <i class="far fa-arrow-alt-circle-left"></i>
+  </a>
+    <video controls>
+      <source src="/video/{{singleData.movies_trailer}}">
+    </video>
+    <div class="infoDiv">
+      <h1>{{singleData.movies_title}}</h1>
+      <p>{{singleData.movies_release}}</p>
+      <p>{{singleData.movies_runtime}}</p>
+      <p>{{singleData.movies_storyline}}</p>
+    </div>
+
+  <!-- Reviews -->
+  <article class="comments" v-if="reviews.length > 0">
+    <div v-for="review in reviews">
+      <h2>${review.name}</h2>
+      <review-stars :value="review.rating" :disabled="true"></review-stars>
+      <i class="post-date">${review.date}</i>
+      <p>${review.content}</p>
+    </div>
+  </article>
+
+
+  <article class="add-comment">
+    <h4 class="reviw-heading">Add a Review</h4>
+    <span class="hidden movId">{{movieId}}</span>
+    <input v-model="name" type="text" placeholder="Your Name">
+    <review-stars v-model="numStars" :disabled="false"></review-stars>
+    <textarea name="review" id="review" placeholder="What did you think?" v-model="review"
+    ></textarea>
+    <input type="submit" value="Submit Your Review" v-on:click="addReview">
+  </article>
+</section>
