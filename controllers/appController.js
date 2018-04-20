@@ -20,14 +20,13 @@ exports.getHome = (req, res) => {
 });
 };
 
-
 exports.getAllParents = (req, res) => {
   console.log("run Parents page");
   connect.getConnection((err, connection) => {
     if(err){
       return console.log(err.message);
     }
-    let movQuery = 'SELECT movies_id, movies_title, movies_cover FROM tbl_movies';
+    let movQuery = 'SELECT movies_id, movies_title, movies_cover, movies_trailer FROM tbl_movies';
     let musQuery = 'SELECT music_id, music_name, music_artist, music_thumbnail, music_link FROM tbl_music';
     let tvQuery = 'SELECT tv_id, tv_name, tv_rating, tv_thumbnail FROM tbl_tv';
     connect.query(movQuery, (err, movResult) => {
@@ -39,16 +38,13 @@ exports.getAllParents = (req, res) => {
           }
           res.render('parents_home', {
             title: 'Fran\'s Greatest Hits',
-            // defaultMovie : movResult[Math.floor(Math.random() * movResult.length)],
-            // data : JSON.stringify(movResult),
             movieData : JSON.stringify(movResult),
-            musicData : musResult,
-            tvData : tvResult,
+            musicData : JSON.stringify(musResult),
+            tvData : JSON.stringify(tvResult),
             css : 'main.css',
             js : ['main.js'],
-            test : ["{movies_id: 10, movies_title: 'Trolls', movies_cover: 'trolls.jpg' }"]
         });
-        console.log(movResult);
+        console.log(musResult);
         });
       });
     });
@@ -85,27 +81,29 @@ exports.getAllKids = (req, res) => {
 };
 
 exports.getOne = (req, res) => {
-  console.log("hit all movies");
+  console.log("hit get one");
   connect.getConnection((err, connection) => {
     if(err){
       return console.log(err.message);
     }
-  let query = `SELECT * FROM tbl_comments WHERE comments_movie = "${req.params.id}"`;
-  console.log(req.params.id, req.params.movie);
-  connect.query(query, (error, rows) => {
-    connection.release();
-    if (error){
-      console.log(error);
-    }
-    console.log(rows);
-    res.render('moviePage', {
-      movie : req.params.id,
-      moviesrc : req.params.movie,
-      data : JSON.stringify(rows),
-      mainpage : false,
-      videopage : true
+  let revquery = `SELECT * FROM tbl_comments WHERE comments_movie = "${req.params.id}"`;
+  let movquery = `SELECT movies_id, movies_cover, movies_title, movies_runtime, movies_storyline, movies_trailer, movies_release FROM tbl_movies WHERE movies_id = "${req.params.id}"`
+  // console.log(req.params.id, req.params.link);
+    connect.query(revquery, (error, revResult) => {
+      connect.query(movquery, (error, movResult) => {
+        connection.release();
+        if (error){
+          console.log(error);
+        }
+        console.log(revResult);
+        res.render('watch', {
+          movieId : req.params.id,
+          singleData : movResult[0],
+          reviewData : JSON.stringify(revResult),
+          js : ['movieVM.js']
+        });
+      });
     });
-  });
 });
 };
 
@@ -115,7 +113,7 @@ exports.post_new_review = (req, res) => {
     if(err){
       return console.log(err.message);
     }
-    let query = `INSERT INTO tbl_comments VALUES (NULL, "${req.body.name}", "${req.body.comment}", CURRENT_TIMESTAMP(), "${req.body.id}", "${req.body.stars}")`;
+    let query = `INSERT INTO tbl_comments VALUES (NULL, "${req.body.name}", "${req.body.comment}", CURRENT_TIMESTAMP(), "${req.body.id}", 'no', "${req.body.stars}")`;
     console.log(req.params.id, req.params.movie);
     connect.query(query, (error, rows) => {
       connection.release();

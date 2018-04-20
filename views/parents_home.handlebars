@@ -13,7 +13,7 @@
     </div> -->
 
     <div class="moviesDiv">
-      <h6 class="genre-name">Movies</h6>
+      <h2>Movies</h2>
       <div class="movie-list" v-for="movie in movies">
         <a :href="'/watch/' + movie.id">
           <img class="movie-thumb" :src="'/images/' + movie.cover" :alt="movie.name">
@@ -21,26 +21,25 @@
       </div>
     </div>
 
-    <!-- <div class="musicDiv">
+    <div class="musicDiv">
       <h2>Music</h2>
       <div class="musicThumb" v-for="song in music">
-        <img class="musicCover" :src="'images/' + song.music_thumbnail" alt="song.music_name">
-        <audio controls class="audio" :src="'audio/' + song.music_link"></audio>
-        <h3>${song.music_name}</h3>
-        <p>${song.music_artist}</p>
+        <img class="musicCover" :src="'images/' + song.cover" :alt="song.title">
+         <audio controls class="audio" :src="'audio/' + song.link"></audio>
+        <h3>${song.title}</h3>
+        <p>${song.artist}</p>
       </div>
-    </div> -->
-<!--
-    <div id="tvDiv">
+    </div>
+
+    <div class="tvDiv">
     <h2>Shows</h2>
-    <div v-for="show in shows">
-      <a class="movieLink" href="/watchTv/{{tv_id}}" id="{{tv_id}}">
+    <div v-for="show in tv">
+      <a class="movieLink" :href="'/watchTv/' + show.id" :id="show.id">
         <div class="movieThumb">
-          <img src="/images/{{tv_thumbnail}}" alt="{{tv_name}}">
-          <h3>{{tv_name}}</h3>
-          <p>{{tv_artist}}</p>
+          <img :src="'/images/' + show.cover" :alt="show.title">
+          <h3>${show.title}</h3>
         </div>
       </a>
-    </div> -->
-  <!-- </div> -->
+    </div>
+   </div>
 </section>
