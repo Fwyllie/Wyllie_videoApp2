@@ -150,3 +150,20 @@ exports.post_new_review = (req, res) => {
     });
   });
 };
+exports.postTvReview = (req, res) => {
+  console.log("hit all movies");
+  connect.getConnection((err, connection) => {
+    if(err){
+      return console.log(err.message);
+    }
+    let query = `INSERT INTO tbl_comments VALUES (NULL, "${req.body.name}", "${req.body.comment}", CURRENT_TIMESTAMP(), 'no', "${req.body.id}", "${req.body.stars}")`;
+    console.log(req.params.id, req.params.movie);
+    connect.query(query, (error, rows) => {
+      connection.release();
+      if (error){
+        console.log(error);
+      }
+      res.json(rows);
+    });
+  });
+};

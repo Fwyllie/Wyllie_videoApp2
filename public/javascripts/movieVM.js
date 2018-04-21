@@ -42,7 +42,6 @@ var myVideoApp = {
       name : ""
     },
     methods : {
-      // do a post with all the new review stuff
       addReview(){
         //fetch here
         let movieId = document.querySelector('.movId').textContent;
@@ -59,19 +58,45 @@ var myVideoApp = {
         .catch((error) => {
           console.log(error);
         });
-
         this.reviews.push({
-          comments_auth : this.name,
-          comments_copy :  this.review,
-          comments_rating : this.numStars,
-          comments_date : `${new Date()}`
+          name : this.name,
+          content :  this.review,
+          rating : this.numStars,
+          date : `${new Date()}`
         });
-
         this.name = "";
         this.review = "";
         this.numStars = 0;
-        }
+      },
+    addTvReview(){
+      //fetch here
+      let movieId = document.querySelector('.movId').textContent;
+
+      axios.post('/tvapi', {
+        id : movieId,
+        name : this.name,
+        stars : this.numStars,
+        comment : this.review
+      })
+      .then ((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      this.reviews.push({
+        name : this.name,
+        content :  this.review,
+        rating : this.numStars,
+        date : `${new Date()}`
+      });
+
+      this.name = "";
+      this.review = "";
+      this.numStars = 0;
       }
-    })
+    }
+  })
 };
 myVideoApp.movieReviews(appData.movies);
